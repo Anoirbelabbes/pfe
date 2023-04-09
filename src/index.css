@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background-color: #000300;
+}
+body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Personnaliser l'apparence de la barre de défilement de Firefox */
+  body::-moz-scrollbar {
+    width: 10px;
+    height: 10px;
+    background-color: #f1f1f1;
+  }
+  
+  body::-moz-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 5px;
+  }
+html{
+  scroll-behavior: smooth;
+}
+
+/* Personnalisation de la barre de défilement */
+::-webkit-scrollbar {
+  width: 5px; /* Largeur de la barre de défilement */
+}
+
+/* Personnalisation de la couleur de fond de la barre de défilement */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px; /* Coins arrondis */
+}
+
+/* Personnalisation de la couleur de remplissage de la barre de défilement */
+::-webkit-scrollbar-thumb {
+  background: #171b1c;
+  border-radius: 5px; /* Coins arrondis */
+}
+
