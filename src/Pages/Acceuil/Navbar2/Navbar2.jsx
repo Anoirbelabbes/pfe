@@ -7,6 +7,7 @@ import Profil from '../Profil/Profil';
 import LastBookReads from './LastBookReads';
 import Recommended from './Recommended';
 import Footer2 from '../Footer2';
+import axios from "axios";
 
 
 const Navbar2 = () => {
@@ -22,7 +23,7 @@ const Navbar2 = () => {
     <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white md:px-8'>
       <TbBooks size="35%" className='text-[#00df9a] text-2xl animate-pulse mr-2' />
       <div className='flex items-center'>
-        <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-9  hover:cursor-pointer'>BookTracker</h1>
+        <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-24  hover:cursor-pointer'>BookTracker</h1>
         <div onClick={handleNav} className='block md:hidden'> {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}</div>
       </div>
       <ul className='hidden md:flex space-x-9 mr-60 mt-3 hover:cursor-pointer'>
@@ -73,13 +74,7 @@ const Navbar2 = () => {
     </section>
 
     <section className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mb-20'>
-      <Recommended  className="w-32 break-all"
-      books2={[
-        { id: '1' ,title: "Save the World", image :"https://m.media-amazon.com/images/I/71GtDxb6xeL.jpg " },
-        { id: '2' ,title: "Young Forever",image :"https://m.media-amazon.com/images/P/0316453188.01._SCLZZZZZZZ_SX500_.jpg" },
-        { id: '3' ,title: "Verity" ,image :"https://m.media-amazon.com/images/I/41ZLnc34EiL.jpg" },
-        { id: '4' ,title: "The Housemaid" ,image :"https://m.media-amazon.com/images/I/81PDk822yzL.jpg" },
-       ]} />
+      <Recommended  className="w-32 break-all" />
     </section>
 
     <section>

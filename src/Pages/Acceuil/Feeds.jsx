@@ -63,7 +63,7 @@ const Feeds = () => {
       <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white md:px-8'>
         <TbBooks size="35%" className='text-[#00df9a] text-2xl animate-pulse mr-2' />
         <div className='flex items-center'>
-          <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-9  hover:cursor-pointer'>BookTracker</h1>
+          <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-24 hover:cursor-pointer'>BookTracker</h1>
           <div onClick={handleNav} className='block md:hidden'> {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}</div>
         </div>
         <ul className='hidden md:flex space-x-9 mr-60 mt-3 hover:cursor-pointer'>

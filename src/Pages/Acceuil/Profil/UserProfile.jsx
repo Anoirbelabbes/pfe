@@ -28,15 +28,27 @@ const UserProfile = () => {
     const [books, setBooks] = useState([
       {
         id: 1, title: "The Lord of the Rings: The Fellowship of the Ring", author: "J.R.R. Tolkien", image:"https://m.media-amazon.com/images/I/91hnJZ0xM4L.jpg", pages: 423, pagesRead: 206, pagesTotal:250, rating: 4.5,
+        comments: [
+          { id: 1, userName: 'Alice', userImg: 'https://randomuser.me/api/portraits/women/68.jpg', text: '"The Great Gatsby" is a classic novel by F. Scott Fitzgerald, set in the 1920s, that explores themes of decadence, love, and the American Dream. It is a beautifully written and thought-provoking work that has become a staple in American literature.' },
+        ],
       },
       {
         id: 2, title: "To Kill a Mockingbird", author: "Harper Lee", image:"https://m.media-amazon.com/images/I/81lNLjBSg-L.jpg", pages: 281, pagesRead: 281, pagesTotal:310, rating: 5,
+        comments: [
+          { id: 1, userName: 'Alice', userImg: 'https://randomuser.me/api/portraits/women/68.jpg', text: '"The Great Gatsby" is a classic novel by F. Scott Fitzgerald, set in the 1920s, that explores themes of decadence, love, and the American Dream. It is a beautifully written and thought-provoking work that has become a staple in American literature.' },
+        ],
       },
       {
         id: 3, title: "1984", author: "George Orwell", image: "https://m.media-amazon.com/images/I/61+Ofr8coCL.jpg", pages: 328, pagesRead: 246, pagesTotal:400, rating: 4,
+        comments: [
+          { id: 1, userName: 'Alice', userImg: 'https://randomuser.me/api/portraits/women/68.jpg', text: '"The Great Gatsby" is a classic novel by F. Scott Fitzgerald, set in the 1920s, that explores themes of decadence, love, and the American Dream. It is a beautifully written and thought-provoking work that has become a staple in American literature.' },
+        ],
       },
       {
         id: 4, title: "1984", author: "George Orwell", image: "https://m.media-amazon.com/images/I/61+Ofr8coCL.jpg", pages: 328, pagesRead: 246, pagesTotal:400, rating: 4,
+        comments: [
+          { id: 1, userName: 'Alice', userImg: 'https://randomuser.me/api/portraits/women/68.jpg', text: '"The Great Gatsby" is a classic novel by F. Scott Fitzgerald, set in the 1920s, that explores themes of decadence, love, and the American Dream. It is a beautifully written and thought-provoking work that has become a staple in American literature.' },
+        ],
       },
     ]);
     
@@ -83,7 +95,7 @@ const UserProfile = () => {
           <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white md:px-8'>
             <TbBooks size="35%" className='text-[#00df9a] text-2xl animate-pulse mr-2' />
             <div className='flex items-center'>
-              <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-9  hover:cursor-pointer'>BookTracker</h1>
+              <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-24  hover:cursor-pointer'>BookTracker</h1>
               <div onClick={handleNav} className='block md:hidden'> {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}</div>
             </div>
             <ul className='hidden md:flex space-x-9 mr-60 mt-3 hover:cursor-pointer'>
@@ -249,7 +261,7 @@ const UserProfile = () => {
                     onClick={() => setSelectedBook(book)}
                   >
                     <div className="flex">
-                      <img src={book.img} alt={book.title} className="w-20 h-28 object-cover rounded-lg" />
+                      <img src={book.image} alt={book.title} className="w-20 h-28 object-cover rounded-lg" />
                       <div className="ml-4">
                         <h2 className="text-xl font-semibold mb-2">{book.title}</h2>
                         <div className="flex items-center">
@@ -271,7 +283,7 @@ const UserProfile = () => {
                 <div className="mt-8 px-4 md:px-0">
                   <div className="bg-white p-4 rounded-lg shadow-md">
                     <div className="flex flex-col md:flex-row mb-4">
-                      <img src={selectedBook.img} alt={selectedBook.title} className="w-full md:w-32 h-auto object-cover rounded-lg mb-4 md:mb-0 md:mr-4" />
+                      <img src={selectedBook.image} alt={selectedBook.title} className="w-full md:w-32 h-auto object-cover rounded-lg mb-4 md:mb-0 md:mr-4" />
                       <div className="flex-1">
                         <h2 className="text-xl font-semibold mb-2">{selectedBook.title}</h2>
                         <p className="text-gray-500 mb-2">{selectedBook.author}</p>
@@ -341,7 +353,7 @@ const UserProfile = () => {
           <div className="flex flex-wrap ml-4 md:ml-56">
             {friends.map((friend) => (
               <a key={friend.id} className="m-2">
-                <img src={friend.image} alt={friend.name} className="w-16 h-16 rounded-full" />
+                <img src={friend.image} alt={friend.name} className="w-16 h-16 rounded-full cursor-pointer" />
               </a>
             ))}
           </div>

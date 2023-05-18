@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import {TbBooks} from 'react-icons/tb';
 import Profil from './Profil/Profil';
@@ -6,14 +6,75 @@ import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Footer2 from './Footer2'
+import axios from 'axios';
 import { BsCheckCircle } from "react-icons/bs";
 
-const Books = () => {
+    const Books = () => {
     const [nav, setNav] = useState(false);
 
     const handleNav = () => {
     setNav(!nav);
     };
+
+
+
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [books, setBooks] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState('');
+
+    const handleSearch = async (event) => {
+      event.preventDefault();
+      let url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&printType=books&maxResults=40`;
+      if (selectedGenre !== '') {
+        url += `+subject:${selectedGenre}`;
+      }
+      const result = await axios.get(url);
+      setBooks(result.data.items);
+    };
+
+    const handleGenreChange = (event) => {
+      setSelectedGenre(event.target.value);
+      if (event.target.value === '') {
+        // si l'utilisateur a sélectionné "All genres", afficher tous les livres
+        setSearchTerm('');
+        axios.get(`https://www.googleapis.com/books/v1/volumes?printType=books&maxResults=40`)
+          .then((result) => {
+            setBooks(result.data.items);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        // si l'utilisateur a sélectionné un genre, rechercher des livres avec ce genre
+        let url = `https://www.googleapis.com/books/v1/volumes?q=subject:${event.target.value}&printType=books&maxResults=40`;
+        if (searchTerm !== '') {
+          url += `+${searchTerm}`;
+        }
+        axios.get(url)
+          .then((result) => {
+            setBooks(result.data.items);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    };
+
+    useEffect(() => {
+      // Recherche aléatoire lors de la première visite de la page
+      const randomGenres = ['biography', 'comics', 'fantasy', 'fiction', 'history', 'horror', 'mystery', 'romance', 'science', 'travel'];
+      const randomGenre = randomGenres[Math.floor(Math.random() * randomGenres.length)];
+      axios.get(`https://www.googleapis.com/books/v1/volumes?q=subject:${randomGenre}&printType=books&maxResults=40`)
+        .then((result) => {
+          setBooks(result.data.items);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, []);
+
+
 
     const [isClicked, setIsClicked] = useState(false);
 
@@ -21,58 +82,7 @@ const Books = () => {
     setIsClicked(!isClicked);
   }
 
-    const bookData = [
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/81fyoFoaxlL.jpg',
-        title: 'Dog Man',
-        description:
-          'DOG MAN IS BACK! The highly anticipated new graphic novel in the #1 worldwide bestselling Dog Man series starring everyones favorite canine superhero by award-winning author and illustrator Dav Pilkey is coming March 28, 2023!...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/71IJiOOyb1L.jpg',
-        title: 'Outlive',
-        description:
-          'A groundbreaking manifesto on living better and longer that challenges the conventional medical thinking on aging and reveals a new approach to preventing chronic disease...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/71HsLc-TNlL.jpg',
-        title: 'Things We Never Got Over',
-        description:
-          'Bearded, bad-boy barber Knox prefers to live his life the way he takes his coffee: Alone. Unless you count his basset hound, Waylon...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/51Hot+3TFfL.jpg',
-        title: 'Birnam Wood',
-        description:
-          '“Birnam Wood is terrific. As a multilayered, character-driven thriller, it’s as good as it gets. Ruth Rendell would have loved it. A beautifully textured work—what a treat.”...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/713F+ivM9NL.jpg',
-        title: 'Saved',
-        description:
-          '"An affecting, singular story...a bracing tale of life on the edge of death...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/A16NFakAgML.jpg',
-        title: 'Superpower in Peril',
-        description:
-          'Discover a groundbreaking vision for how to unlock America’s full potential for greatness from one of the country’s foremost conservative leaders...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/81KAAvSlB3L.jpg',
-        title: 'Start, Stay, or Leave',
-        description:
-          'The Fox News host and #1 New York Times bestselling author of Doesn’t Hurt to Ask shares his trusted framework for decision making...',
-      },
-      {
-        imageSrc: 'https://m.media-amazon.com/images/I/71cLFOjw8dL.jpg',
-        title: 'Walk the Blue Line',
-        description:
-          'Police officers risk their lives every day to protect and serve our homes, families and communities. Here is “a notable collection of heartfelt stories from the front line told with honesty and compassion...',
-      },
-    ];
   
-
     
   return (
     <div>
@@ -80,7 +90,7 @@ const Books = () => {
         <div className='flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white md:px-8'>
           <TbBooks size="35%" className='text-[#00df9a] text-2xl animate-pulse mr-2' />
           <div className='flex items-center'>
-            <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-9  hover:cursor-pointer'>BookTracker</h1>
+            <h1 className='w-full text-3xl font-bold text-[#00df9a] pr-24  hover:cursor-pointer'>BookTracker</h1>
             <div onClick={handleNav} className='block md:hidden'> {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}</div>
           </div>
           <ul className='hidden md:flex space-x-9 mr-60 mt-3 hover:cursor-pointer'>
@@ -119,79 +129,62 @@ const Books = () => {
 
 
         
-        <section className='flex justify-center pt-6'>
-            <div className="flex items-center bg-[#000300] rounded-full p-2 pr-10">
-              <div className="flex-grow-0">
-                <button className="px-2 py-1 bg-[#00df9a] text-[#000300] rounded-l-full hover:bg-green-600 focus:outline-none">
-                  <AiOutlineSearch />
-                </button>
-              </div>
-              <div className="flex-grow ml-2">
-                <input
-                  type="text"
-                  placeholder="Serach your book.."
-                  className="w-full text-[#00df9a] px-2 py-1 rounded-r-full bg-transparent border-none focus:outline-none"
-                />
-              </div>
-              <div className="flex-grow-0 ml-2">
-                <select className="px-2 py-1 bg-transparent text-[#00df9a] rounded-full border-none focus:outline-none hover:bg-gray-600 transition-colors duration-500">
-                  <option value="" className='text-black'>Tous les genres</option>
-                  <option value="romance" className='text-black'>Romance</option>
-                  <option value="thriller" className='text-black'>Thriller</option>
-                  <option value="fantasy" className='text-black'>Fantasy</option>
-                </select>
-              </div>
-
-          </div>
-        </section>
-
-
-
-
-
-        <section>
-
-        <div className="flex justify-center mt-10">
-      <div className="flex flex-wrap justify-center gap-10">
-        {bookData.map((book, index) => (
-          (index % 2 === 0) ? (
-            <div key={book.title} className="w-80 md:w-96 p-2">
-              <div className="relative rounded-lg overflow-hidden hover:transform hover:scale-110 transition-all duration-500">
-                <img src={book.imageSrc} alt={book.title} className="w-80 h-80 rounded-3xl" />
-                <div className="absolute bottom-0 w-80 h-16 bg-black bg-opacity-75 flex justify-between items-center px-4">
-                  <span className="text-[#00df9a]">{book.title}</span>
-                  <div>
-                    <IoMdAddCircleOutline className={`text-[#00df9a] cursor-pointer ${isClicked ? 'hidden' : ''}`} size={24} onClick={handleIconClick} />
-                    <BsCheckCircle className={`text-[#00df9a] cursor-pointer ${!isClicked ? 'hidden' : ''}`} size={24} onClick={handleIconClick} />
-                  </div>
+        <section className='flex justify-center pt-6 px-12'>
+          <div className="bg-[#000300] min-h-screen">
+            <form onSubmit={handleSearch} className="flex justify-center pt-6">
+              <div className="flex items-center bg-[#000300] rounded-full p-2 pr-10">
+                <div className="flex-grow-0">
+                  <button className="px-2 py-1 bg-[#00df9a] text-white rounded-l-full hover:bg-green-800 focus:outline-none">
+                    <AiOutlineSearch />
+                  </button>
+                </div>
+                <div className="flex-grow ml-2">
+                  <input
+                    type="text"
+                    placeholder="Search your book.."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full text-white px-2 py-1 rounded-r-full bg-transparent border-none focus:outline-none"
+                  />
+                </div>
+                <div className="flex-grow-0 ml-2">
+                  <select
+                    value={selectedGenre}
+                    onChange={handleGenreChange}
+                    className="px-2 py-1 bg-transparent text-white focus:outline-none">
+                    <option className='text-black' value="fiction">All genres</option>
+                    <option className='text-black' value="art">Art</option>
+                    <option className='text-black' value="biography">Biography</option>
+                    <option className='text-black' value="comics">Comics</option>
+                    <option className='text-black' value="computers">Computers</option>
+                    <option className='text-black' value="history">History</option>
+                    <option className='text-black' value="horror">Horror</option>
+                    <option className='text-black' value="mystery">Mystery</option>
+                    <option className='text-black' value="romance">Romance</option>
+                    <option className='text-black' value="science">Science</option>
+                    <option className='text-black' value="travel">Travel</option>
+                  </select>
                 </div>
               </div>
-              <div className="py-4">
-                <p className="text-sm text-gray-400">{book.description}</p>
-              </div>
-            </div>
-          ) : (
-            <div key={book.title} className="w-80 md:w-96 p-2">
-              <div className="relative rounded-lg overflow-hidden hover:transform hover:scale-110 transition-all duration-500">
-                <img src={book.imageSrc} alt={book.title} className="w-80 h-80 rounded-3xl" />
-                <div className="absolute bottom-0 w-80 h-16 bg-black bg-opacity-75 flex justify-between items-center px-4">
-                  <span className="text-[#00df9a]">{book.title}</span>
-                  <div>
-                    <IoMdAddCircleOutline className={`text-[#00df9a] cursor-pointer ${isClicked ? 'hidden' : ''}`} size={24} onClick={handleIconClick} />
-                    <BsCheckCircle className={`text-[#00df9a] cursor-pointer ${!isClicked ? 'hidden' : ''}`} size={24} onClick={handleIconClick} />
-                  </div>
+            </form>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+                  {books.map((book) => {
+                    return (
+                      <div key={book.id} className="flex flex-col items-center justify-center bg-[#000300] rounded-md p-4">
+                        {book.volumeInfo.imageLinks ? (
+                      <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} className="mb-2" />
+                      ) : (
+                        <div className="h-48 w-32 bg-gray-400 mb-2"></div>
+                          )}
+                        <h2 className="text-white font-bold text-center mb-2 break-all max-w-full">{book.volumeInfo.title}</h2>
+                        <p className="text-gray-400 text-sm text-center">{book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : 'Unknown author'}</p>
+                      </div>
+                    );
+                    })}
                 </div>
               </div>
-              <div className="py-4">
-                <p className="text-sm text-gray-400">{book.description}</p>
-              </div>
-            </div>
-          )
-        ))}
-      </div>
-    </div>
-
         </section>
+
                 
         
         <section>

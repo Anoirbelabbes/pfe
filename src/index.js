@@ -16,6 +16,8 @@ import Feeds from './Pages/Acceuil/Feeds';
 import Challenges from './Pages/Acceuil/Challenges';
 import BookList from './Pages/Acceuil/BookList';
 import ContactUs from './Pages/Home/Contactus/ContactUs';
+import BookInfos from './Pages/Acceuil/BookInfos';
+import Dashboard from './Pages/Acceuil/Profil/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -76,6 +78,16 @@ const router = createBrowserRouter([
   {
     path : "ContactUs",
     element: <ContactUs />
+  },
+
+  {
+    path : "BookInfos",
+    element: <BookInfos />
+  },
+
+  {
+    path : "Dashboard",
+    element: <Dashboard />
   },
  
 ]);

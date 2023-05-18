@@ -8,7 +8,7 @@ const About = () => {
     <img className='w-full md:w-[500px] mx-auto my-4' src={read1} alt='read' />
     <div className='flex flex-col justify-center'>
       <p className='text-[#00df9a] font-bold '>About</p>
-      <h1 className='md:text-4xl sm:text-3xl text-2xl font-bold py-2'>BLABLABLA</h1>
+      <h1 className='md:text-4xl sm:text-3xl text-2xl font-bold py-2'>Lorem ipsum dolor sit </h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicng elit. Voluptatum
         molestiae delectus culpa hic assumenda, voluptate reprehenderit
@@ -21,7 +21,7 @@ const About = () => {
   <div className='max-w-[1240px] mx-auto grid md:grid-cols-2 mt-20'>
     <div className='flex flex-col justify-center'>
       <p className='text-[#00df9a] font-bold'>About</p>
-      <h1 className='md:text-4xl sm:text-3xl text-2xl font-bold py-2'>BLABLABLA</h1>
+      <h1 className='md:text-4xl sm:text-3xl text-2xl font-bold py-2'>Lorem ipsum dolor sit </h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
         molestiae delectus culpa hic assumenda, voluptate reprehenderit

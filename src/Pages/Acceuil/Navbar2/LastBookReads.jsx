@@ -7,7 +7,7 @@ const LastBookReads = ({ books }) => {
   return (
     <div>
         <div className="bg-[#000300] py-4 px-2 ">
-          <h2 className="text-lg font-bold mb-10 text-[#00df9a] mr-11">Last Book Reads</h2>
+          <h2 className="text-lg font-bold mb-10 text-[#00df9a] mr-11">Last book reads</h2>
           <div className="overflow-x-auto whitespace-nowrap text-center ">
             {books.map((book) => (
               <div key={book.id} className="inline-block mx-4">

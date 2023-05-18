@@ -45,14 +45,10 @@ const Profil = () => {
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <a
-              href="#"
-              className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
-              role="menuitem"
-            >
+            <Link to="/Dashboard" className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center" role="menuitem">
               <FiBarChart2 className="w-4 h-4 mr-2" />
               Dashboard
-            </a>
+            </Link>
 
             <Link to='/UserProfile' className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
                   role="menuitem"
